@@ -1,0 +1,16 @@
+# robots.txt — Arcmen Studios (https://www.arcmen.in/)
+
+User-agent: *
+Allow: /
+
+# Explicitly welcome the major crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+Sitemap: https://www.arcmen.in/sitemap.xml

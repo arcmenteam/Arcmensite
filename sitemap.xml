@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Sitemap for Arcmen Studios (https://www.arcmen.in/).
+  Only the home page exists in this export, so it is the only <url> entry. The
+  <image:*> and <video:*> extensions let Google index the artwork and the showreel
+  for Google Images / Google Video search.
+  If you later export the /about, /albums/*, /reviews, /blog and /contact pages from
+  Framer, add one <url> block per page here.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+  <url>
+    <loc>https://www.arcmen.in/</loc>
+    <lastmod>2026-08-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+
+    <image:image><image:loc>https://framerusercontent.com/images/3lcJMoudbRGL6KxAK4m0lIcnpc.png?width=1532&amp;height=540</image:loc><image:title>Arcmen Studios logo</image:title><image:caption>Arcmen Studios – digital media marketing and production agency</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/TTC8dEtItswR0OWgQJToevlC28Y.png?scale-down-to=2048&amp;width=4008&amp;height=2684</image:loc><image:title>Arcmen Studios production team</image:title><image:caption>Arcmen Studios production team shooting a brand campaign</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/10uqZwhSX5hDX3VfINIz8bgA2M.jpg?scale-down-to=2048&amp;width=3706&amp;height=5503</image:loc><image:title>Cafe Resolution</image:title><image:caption>Cafe and food photography campaign produced by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/2dlUhgxXciFZL0goljzRvohH64.jpg?scale-down-to=2048&amp;width=3255&amp;height=4069</image:loc><image:title>Carnival Chaos</image:title><image:caption>Product and commercial photography produced by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/3QbuR8imR7SwSINmkTXQE0iEtmY.jpg?scale-down-to=2048&amp;width=4000&amp;height=6000</image:loc><image:title>Indian Darbar</image:title><image:caption>Multi cuisine restaurant food photography by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/3hkHumNUie6n5mY6gEmESseNmKE.jpg?scale-down-to=2048&amp;width=3622&amp;height=4527</image:loc><image:title>Rasyumm</image:title><image:caption>Cafe food photography by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/g3b4IKNTzowBGIOkyYJIJQTLmM.jpeg?scale-down-to=2048&amp;width=3944&amp;height=4930</image:loc><image:title>Brew Commune</image:title><image:caption>Cafe food and brand content production by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/F0kzVkLJIjCzsnRzBu97srWjMco.png?scale-down-to=1024&amp;width=1352&amp;height=1690</image:loc><image:title>Kraft Kittens</image:title><image:caption>Product and brand collaboration shoot by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/ueGMQAF4BjTJmQJesQ8PlQs2Gjw.png?scale-down-to=2048&amp;width=2744&amp;height=3430</image:loc><image:title>Smoke &amp; Sizzle</image:title><image:caption>Product and commercial food photography by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/ULEQuNwVUoVKP7uYOdRBbPF2IU.jpg?scale-down-to=2048&amp;width=4054&amp;height=5068</image:loc><image:title>Groove with Yogi</image:title><image:caption>Dance event coverage by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/mxZcFRcqwINbtUyBX06GSHG6gO4.png?scale-down-to=1024&amp;width=1853&amp;height=1878</image:loc><image:title>Beyond Label</image:title><image:caption>Clothing brand campaign by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/x5LIfuuWTLcRxpPhEzizeIvqtk.jpg?scale-down-to=2048&amp;width=4672&amp;height=6224</image:loc><image:title>Sree Kanya Jewellery</image:title><image:caption>Jewellery brand photography by Arcmen Studios</image:caption></image:image>
+    <image:image><image:loc>https://framerusercontent.com/images/jB6yjh2EtNqz7gMvNDrFZeVOYQE.jpg?scale-down-to=2048&amp;width=4000&amp;height=5000</image:loc><image:title>Modelling at NIFT</image:title><image:caption>Fashion modelling and clothing shoot by Arcmen Studios</image:caption></image:image>
+
+    <video:video>
+      <video:thumbnail_loc>https://framerusercontent.com/images/tTcAtQHyKbUdGg81VdmYPYgTePQ.png?width=1200&amp;height=800</video:thumbnail_loc>
+      <video:title>Arcmen Studios showreel – building brands that speak louder</video:title>
+      <video:description>Showreel from Arcmen Studios, a digital media marketing and production agency covering social media campaigns, food and product photography, event coverage and brand collaborations.</video:description>
+      <video:content_loc>https://framerusercontent.com/assets/tNiKvAWEjMnsRZpXzJEPoMkDX28.mp4</video:content_loc>
+      <video:family_friendly>yes</video:family_friendly>
+      <video:live>no</video:live>
+    </video:video>
+  </url>
+</urlset>

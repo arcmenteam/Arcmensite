@@ -1,0 +1,7 @@
+# Local tooling / editor state — not part of the deployed site
+.claude/
+
+# OS junk
+Thumbs.db
+desktop.ini
+.DS_Store
