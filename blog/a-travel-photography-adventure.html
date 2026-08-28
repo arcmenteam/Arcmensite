@@ -196,6 +196,14 @@
     <meta name="author" content="Arcmen Studios" />
     <link rel="preconnect" href="https://framerusercontent.com" crossorigin />
     <link rel="dns-prefetch" href="https://framerusercontent.com" />
+    <!-- Hides the "Made in Framer" badge in the bottom-right corner. The
+         markup stays in place on purpose: Framer's runtime mounts a separate
+         React root on #__framer-badge-container and throws if that element
+         is missing. -->
+    <style>
+      #__framer-badge-container,
+      .__framer-badge { display: none !important; }
+    </style>
     <meta property="article:published_time" content="2024-05-04" />
     <script type="application/ld+json">
 {

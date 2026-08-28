@@ -324,6 +324,14 @@ def rewrite_head(doc, page, graph, stats):
         '    <meta name="author" content="%s" />' % BRAND,
         '    <link rel="preconnect" href="https://framerusercontent.com" crossorigin />',
         '    <link rel="dns-prefetch" href="https://framerusercontent.com" />',
+        "    <!-- Hides the \"Made in Framer\" badge in the bottom-right corner. The",
+        "         markup stays in place on purpose: Framer's runtime mounts a separate",
+        "         React root on #__framer-badge-container and throws if that element",
+        "         is missing. -->",
+        "    <style>",
+        "      #__framer-badge-container,",
+        "      .__framer-badge { display: none !important; }",
+        "    </style>",
     ]
     # No rel=preload for the hero: Framer serves it from a srcset of resized
     # variants that differ per breakpoint, so a single preload href downloads a

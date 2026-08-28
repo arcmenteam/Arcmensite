@@ -235,6 +235,18 @@
     <link rel="preload" as="image" fetchpriority="high" href="https://framerusercontent.com/images/tTcAtQHyKbUdGg81VdmYPYgTePQ.png?width=1200&amp;height=800" />
     <link rel="preload" as="image" href="https://framerusercontent.com/images/3lcJMoudbRGL6KxAK4m0lIcnpc.png?scale-down-to=512&amp;width=1532&amp;height=540" />
     <link rel="sitemap" type="application/xml" title="Sitemap" href="sitemap.xml" />
+
+    <!-- ===================== Framer badge =====================
+         Hides the "Made in Framer" badge in the bottom-right corner. The markup
+         itself is left in place on purpose: Framer's runtime mounts a separate
+         React root on #__framer-badge-container and throws an uncaught error if
+         that element is missing, which would break the rest of its bootstrap.
+         Hiding it costs nothing and the badge carries data-nosnippet already.
+    -->
+    <style>
+      #__framer-badge-container,
+      .__framer-badge { display: none !important; }
+    </style>
     <!-- ===================== Structured data (schema.org) =====================
          TODO for local search: fill in your street address, city, postal code and
          phone number in "address"/"telephone" below, and paste your Instagram /
