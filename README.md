@@ -59,6 +59,37 @@ Two details are deliberate and worth keeping:
   robots and alt text that Framer's React resets. It watches for DOM mutations
   and only steps in after 700 ms of quiet, for the same reason.
 
+## Social profiles and the email link
+
+`SOCIALS` near the top of `tools/build-seo.py` is the single place profiles are
+listed. Each row is `(name, url, icon path)`; the icons are Phosphor "fill"
+logos, which is the set the Framer project already uses.
+
+A `url` of `None` means the account does not exist yet. The button is still
+built — the row reads as finished while the page is being set up — but it is not
+a link: no `href`, so there is nothing to click and nothing for a crawler to
+follow, and it carries `aria-disabled="true"` and a "(link coming soon)" label
+for screen readers. It is also left out of `sameAs`, since that array tells
+search engines the profile is real. Fill the url in, re-run the script, and the
+same button becomes a live link and joins `sameAs`. Nothing else to change.
+Facebook and LinkedIn are currently `None`, waiting on real page URLs.
+
+Two things happen from the keeper rather than in the served markup:
+
+- **The extra social buttons** are cloned from the Instagram button the Framer
+  project ships inside its "Social Links Row 1" layer, so the fill, radius,
+  hover, icon size and label type all come from the design. Rows are found by
+  `data-framer-name`, not by class — Framer's class hashes change on every
+  re-export, the layer names do not. Buttons fill two to a row: four across one
+  row leaves each label too narrow to fit on a phone.
+- **The email address becomes a `mailto:` link**, in the footer of every page
+  and again on the contact page, using the same Framer link preset as the phone
+  number beside it.
+
+Both wait for hydration for the same reason the alt text does: React deletes DOM
+it did not render itself, so anything added to the served markup would appear,
+vanish and come back.
+
 `index.html` is the one page whose `<head>` is hand-written (extra keyword and
 geo hints, the showreel's Open Graph tags, a fuller JSON-LD graph). The script
 keeps that head as-is and rebuilds only its body.

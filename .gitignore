@@ -1,5 +1,10 @@
 # Local tooling / editor state — not part of the deployed site
 .claude/
+__pycache__/
+
+# Archived originals pulled off Framer's CDN by tools/fetch-framer-assets.py.
+# Large binaries; kept out of git history until we decide how to store them.
+assets-source/
 
 # OS junk
 Thumbs.db
