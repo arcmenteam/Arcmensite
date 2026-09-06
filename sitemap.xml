@@ -3,16 +3,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
- <url> entry. The
-  <image:*> and <video:*> extensions let Google index the artwork and the showreel
-  for Google Images / Google Video search.
-  If you later export the /about, /albums/*, /reviews, /blog and /contact pages from
-  Framer, add one <url> block per page here.
--->
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-  <url>
+<url>
     <loc>https://www.arcmen.in/</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>weekly</changefreq>
@@ -101,7 +92,7 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://framerusercontent.com/images/DqyuzBJF91UOIoPxfguIXHmas3w.jpg</image:loc>
-      <image:title>Carnival Chaos | Product & Packaging Photography</image:title>
+      <image:title>Carnival Chaos | Product &amp; Packaging Photography</image:title>
     </image:image>
   </url>
   <url>

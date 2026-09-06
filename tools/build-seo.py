@@ -1533,7 +1533,11 @@ def build_sitemap(jobs):
     """Keep the home entry (with its image/video extensions) and rebuild the rest."""
     home = ""
     if os.path.exists("sitemap.xml"):
-        m = re.search(r"[ \t]*<url>.*?</url>\n", read("sitemap.xml"), re.S)
+        # Anchor on the home <loc>, not on the first bare "<url>" text: the
+        # opening comment below mentions "<url>" in prose, so a loose search
+        # swallows part of that comment and corrupts the file.
+        m = re.search(r"(?s)<url>\s*<loc>" + re.escape(HOST + "/") +
+                      r"</loc>.*?</url>\n", read("sitemap.xml"))
         home = m.group(0) if m else ""
     parts = [
         '<?xml version="1.0" encoding="UTF-8"?>\n',
