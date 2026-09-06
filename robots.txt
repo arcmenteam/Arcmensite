@@ -1,4 +1,4 @@
-# robots.txt — Arcmen Studios (https://www.arcmen.in/)
+# robots.txt — Arcmen (https://www.arcmen.in/)
 
 User-agent: *
 Allow: /

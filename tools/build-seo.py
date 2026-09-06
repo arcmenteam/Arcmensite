@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Re-apply the Arcmen Studios SEO layer to a fresh Framer export.
+"""Re-apply the Arcmen SEO layer to a fresh Framer export.
 
     python tools/build-seo.py <dir-of-framer-pages> [--out .]
 
@@ -25,15 +25,15 @@ import re
 import sys
 
 HOST = "https://www.arcmen.in"
-BRAND = "Arcmen Studios"
-ALT_BRAND = "Arcmen Studio"
+BRAND = "Arcmen"
+ALT_BRAND = "Arcmen"
 LOGO = "https://framerusercontent.com/images/3lcJMoudbRGL6KxAK4m0lIcnpc.png"
 LOGO_KEY = "3lcJMoudbRGL6KxAK4m0lIcnpc.png"
 EMAIL = "arcmen.team@gmail.com"
 PHONE = "+91 79936 80585"
 ROBOTS = ("index, follow, max-snippet:-1, max-image-preview:large, "
           "max-video-preview:-1")
-ORG_DESC = ("Arcmen Studios is a digital media marketing and production agency. "
+ORG_DESC = ("Arcmen is a digital media marketing and production agency. "
             "We plan campaigns, shoot brand, food, product and event content, "
             "and run social media pages that grow real audiences.")
 SERVICES = ["Social media marketing", "Content creation", "Brand identity",
@@ -136,35 +136,35 @@ POSTS = [
 SECTIONS = {
     "/about": (
         "about.html",
-        "About Arcmen Studios — Social Media Marketing Agency",
-        "Arcmen Studios plans every campaign from research first: we study your "
+        "About Arcmen — Social Media Marketing Agency",
+        "Arcmen plans every campaign from research first: we study your "
         "audience, analyse trends and build a platform-specific content roadmap "
         "that turns your brand into a scroll-stopper.",
         "About", "AboutPage"),
     "/contact": (
         "contact.html",
-        "Contact Arcmen Studios — Book a Shoot or Campaign",
-        "Talk to Arcmen Studios about your next brand campaign, product shoot or "
+        "Contact Arcmen — Book a Shoot or Campaign",
+        "Talk to Arcmen about your next brand campaign, product shoot or "
         "event coverage. Email %s or call %s." % (EMAIL, PHONE),
         "Contact", "ContactPage"),
     "/reviews": (
         "reviews.html",
-        "Client Reviews — Arcmen Studios",
+        "Client Reviews — Arcmen",
         "Chefs, dancers and content creators on what it is like to shoot with "
-        "Arcmen Studios: comfortable on set, creative in the edit, and photos "
+        "Arcmen: comfortable on set, creative in the edit, and photos "
         "that come back better than imagined.",
         "Reviews", "WebPage"),
     "/albums": (
         "albums.html",
         "Portfolio — Brand, Food, Product & Event Photography",
-        "Browse the Arcmen Studios portfolio: cafe and restaurant media, product "
+        "Browse the Arcmen portfolio: cafe and restaurant media, product "
         "and commercial shoots, fashion editorials, event coverage, brand "
         "collaborations and documentary work.",
         "Albums", "CollectionPage"),
     "/blog": (
         "blog.html",
         "Blog — Photography & Brand Marketing Insights",
-        "Articles, tips and resources from Arcmen Studios on photography "
+        "Articles, tips and resources from Arcmen on photography "
         "technique, brand storytelling and growing an audience that actually "
         "converts on social media.",
         "Blog", "Blog"),
@@ -976,9 +976,9 @@ def main():
 
 
 SUBJECTS = {
-    "/about": "The Arcmen Studios team at work",
+    "/about": "The Arcmen team at work",
     "/contact": BRAND,
-    "/reviews": "An Arcmen Studios client",
+    "/reviews": "An Arcmen client",
     "/albums": "Album cover from the %s portfolio" % BRAND,
     "/blog": "Illustration from the %s blog" % BRAND,
     "/404": BRAND,
@@ -1006,7 +1006,7 @@ def plan_pages(src, album_docs, known):
             graph.append({
                 "@type": "ItemList",
                 "@id": job["url"] + "#albums",
-                "name": "Arcmen Studios portfolio albums",
+                "name": "Arcmen portfolio albums",
                 "numberOfItems": len(ALBUMS),
                 "itemListElement": [
                     {"@type": "ListItem", "position": i, "name": name,
@@ -1016,7 +1016,7 @@ def plan_pages(src, album_docs, known):
             graph.append({
                 "@type": "ItemList",
                 "@id": job["url"] + "#posts",
-                "name": "Arcmen Studios blog posts",
+                "name": "Arcmen blog posts",
                 "numberOfItems": len(POSTS),
                 "itemListElement": [
                     {"@type": "ListItem", "position": i, "name": headline,

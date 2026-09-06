@@ -1,6 +1,6 @@
-# Arcmen Studios — arcmen.in
+# Arcmen — arcmen.in
 
-Static site for Arcmen Studios, a digital media marketing and production agency.
+Static site for Arcmen, a digital media marketing and production agency.
 Deployed on Vercel at https://www.arcmen.in/ (the apex `arcmen.in` redirects to `www`).
 
 The pages are a Framer export (`arcmenstudio.framer.website`) with an SEO layer
