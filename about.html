@@ -386,7 +386,7 @@
 	<!-- Start of bodyEnd -->
     
     <!-- End of bodyEnd -->
-    <!-- Start of bodyEnd -->
+            <!-- Start of bodyEnd -->
     <!--
       Framer hydrates this page with React after load, and hydration resets a
       few things that matter for search: the title reverts to Framer's own page
@@ -427,6 +427,15 @@
         var VIDEO_LABEL = null;
         var MAILTO = "arcmen.team@gmail.com";
         var SOCIALS = null;
+        var COPY = {
+          "h": "Plan. Shoot. Run.",
+          "p": [
+                    "Arcmen is a digital media marketing and production agency based in Hyderabad. Our process is deliberately simple: research first, shoot second, and manage the accounts afterwards. The research stage decides the audience, the platform and the single message a campaign must land, and every frame on set is directed towards that message rather than towards looking nice.",
+                    "Production stays small on purpose - one team, one direction, and an edit that follows the plan we agreed on. Once content ships we keep going: posting schedules, captions, hashtags, story templates and monthly reporting, so a shoot keeps compounding for months instead of ending on the day.",
+                    "New to working with an agency? The first step costs nothing: send us a product photo, a menu or even a rough idea, and we will come back with the three or four content formats we would make for it and what each would cost. No retainers, no jargon, and no shoot starts until you have approved the plan in writing.",
+                    "That combination - strategy, production and account management under one roof - is what most brands split between three agencies. See it in action across the albums, then tell us about your brand on the contact page."
+          ]
+};
         var SVG_NS = "http://www.w3.org/2000/svg";
 
         function keyFor(el) {
@@ -655,11 +664,68 @@
           }
         }
 
+        // ------------------------------------------------------- extra copy ---
+        // Portfolio and utility pages are intentionally light on words, which
+        // search engines read as thin content. The copy in the EXTRA table at
+        // the top of tools/build-seo.py is real on-page text that Framer does
+        // not know about, so - like the social buttons above - it has to be
+        // created after hydration. It is anchored to the footer rather than to
+        // a Framer layer name, so it survives re-exports of the design.
+
+        function copyAnchor() {
+          var f = document.querySelector("footer");
+          if (!f) return null;
+          var shared = f;
+          while (shared.parentElement &&
+              shared.parentElement.querySelectorAll("footer").length < 2) {
+            shared = shared.parentElement;
+          }
+          var host = shared.parentElement;
+          if (!host) return null;
+          var wrapper = f;
+          while (wrapper.parentElement !== host) wrapper = wrapper.parentElement;
+          return { host: host, wrapper: wrapper };
+        }
+
+        function copyNode(tag, css, parent, text) {
+          var n = document.createElement(tag);
+          if (css) n.setAttribute("style", css);
+          if (text) n.textContent = text;
+          if (parent) parent.appendChild(n);
+          return n;
+        }
+
+        function addCopy() {
+          if (!COPY || !COPY.p || !COPY.p.length) return;
+          if (document.querySelector("[data-arcmen-copy]")) return;
+          var at = copyAnchor();
+          if (!at) return;
+          var box = copyNode("div",
+            "box-sizing:border-box;width:100%;max-width:840px;margin:0 auto;" +
+            "padding:76px 24px 84px;color:rgb(250,245,234);");
+          box.setAttribute("data-arcmen-copy", "1");
+          if (COPY.h) {
+            copyNode("h2",
+              "font-family:inherit;font-size:13px;font-weight:600;" +
+              "letter-spacing:.18em;text-transform:uppercase;line-height:1.5;" +
+              "margin:0 0 22px;color:rgb(250,245,234);opacity:.75;",
+              box, COPY.h);
+          }
+          for (var i = 0; i < COPY.p.length; i++) {
+            copyNode("p",
+              "font-family:inherit;font-size:15px;line-height:1.8;" +
+              "margin:0 0 18px;color:rgb(250,245,234);opacity:.92;",
+              box, COPY.p[i]);
+          }
+          at.host.insertBefore(box, at.wrapper);
+        }
+
         function sweep() {
           fixHead();
           fixVideo();
           linkMail();
           addSocials();
+          addCopy();
           var imgs = document.getElementsByTagName("img");
           for (var i = 0; i < imgs.length; i++) fixImg(imgs[i]);
         }
@@ -734,5 +800,7 @@
       })();
     </script>
     <!-- End of bodyEnd -->
+
+
   </body>
 </html>

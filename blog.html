@@ -442,7 +442,7 @@
 	<!-- Start of bodyEnd -->
     
     <!-- End of bodyEnd -->
-    <!-- Start of bodyEnd -->
+            <!-- Start of bodyEnd -->
     <!--
       Framer hydrates this page with React after load, and hydration resets a
       few things that matter for search: the title reverts to Framer's own page
@@ -480,6 +480,15 @@
         var VIDEO_LABEL = null;
         var MAILTO = "arcmen.team@gmail.com";
         var SOCIALS = null;
+        var COPY = {
+          "h": "Field notes on content that converts",
+          "p": [
+                    "This blog is where the Arcmen team writes about the side of content nobody sees on the feed: the research, the lighting decisions, the edit and the captions that decide whether a post stops the scroll. Every guide is grounded in work we have actually produced for cafes, restaurants, clothing labels and product brands.",
+                    "Expect practical posts on shooting golden hour, styling food and product frames, capturing candid and portrait work, building a portfolio that wins clients, and the camera, editing and colour resources we reach for every week. Where a post mentions gear, we only recommend what we actually own.",
+                    "Prefer learning in short bursts? Every post here is written to be read in under five minutes, with the key points repeated at the end as a checklist you can screenshot. You will find posts on golden-hour technique, food styling, candid and portrait work, portfolio building and the editing tools we use daily. Longer deep-dives appear on this page over time, while quick daily tips go out on our Instagram stories - choose the format that suits how you like to learn.",
+                    "Articles go live as we wrap real client projects, so treat this as a working log rather than a content calendar. Follow @arcmen_team on Instagram, or use the contact page to brief us directly."
+          ]
+};
         var SVG_NS = "http://www.w3.org/2000/svg";
 
         function keyFor(el) {
@@ -708,11 +717,68 @@
           }
         }
 
+        // ------------------------------------------------------- extra copy ---
+        // Portfolio and utility pages are intentionally light on words, which
+        // search engines read as thin content. The copy in the EXTRA table at
+        // the top of tools/build-seo.py is real on-page text that Framer does
+        // not know about, so - like the social buttons above - it has to be
+        // created after hydration. It is anchored to the footer rather than to
+        // a Framer layer name, so it survives re-exports of the design.
+
+        function copyAnchor() {
+          var f = document.querySelector("footer");
+          if (!f) return null;
+          var shared = f;
+          while (shared.parentElement &&
+              shared.parentElement.querySelectorAll("footer").length < 2) {
+            shared = shared.parentElement;
+          }
+          var host = shared.parentElement;
+          if (!host) return null;
+          var wrapper = f;
+          while (wrapper.parentElement !== host) wrapper = wrapper.parentElement;
+          return { host: host, wrapper: wrapper };
+        }
+
+        function copyNode(tag, css, parent, text) {
+          var n = document.createElement(tag);
+          if (css) n.setAttribute("style", css);
+          if (text) n.textContent = text;
+          if (parent) parent.appendChild(n);
+          return n;
+        }
+
+        function addCopy() {
+          if (!COPY || !COPY.p || !COPY.p.length) return;
+          if (document.querySelector("[data-arcmen-copy]")) return;
+          var at = copyAnchor();
+          if (!at) return;
+          var box = copyNode("div",
+            "box-sizing:border-box;width:100%;max-width:840px;margin:0 auto;" +
+            "padding:76px 24px 84px;color:rgb(250,245,234);");
+          box.setAttribute("data-arcmen-copy", "1");
+          if (COPY.h) {
+            copyNode("h2",
+              "font-family:inherit;font-size:13px;font-weight:600;" +
+              "letter-spacing:.18em;text-transform:uppercase;line-height:1.5;" +
+              "margin:0 0 22px;color:rgb(250,245,234);opacity:.75;",
+              box, COPY.h);
+          }
+          for (var i = 0; i < COPY.p.length; i++) {
+            copyNode("p",
+              "font-family:inherit;font-size:15px;line-height:1.8;" +
+              "margin:0 0 18px;color:rgb(250,245,234);opacity:.92;",
+              box, COPY.p[i]);
+          }
+          at.host.insertBefore(box, at.wrapper);
+        }
+
         function sweep() {
           fixHead();
           fixVideo();
           linkMail();
           addSocials();
+          addCopy();
           var imgs = document.getElementsByTagName("img");
           for (var i = 0; i < imgs.length; i++) fixImg(imgs[i]);
         }
@@ -787,5 +853,7 @@
       })();
     </script>
     <!-- End of bodyEnd -->
+
+
   </body>
 </html>

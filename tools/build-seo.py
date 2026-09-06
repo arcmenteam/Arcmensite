@@ -149,7 +149,7 @@ SECTIONS = {
         "Contact", "ContactPage"),
     "/reviews": (
         "reviews.html",
-        "Client Reviews — Arcmen",
+        "Client Reviews — See Why Brands Trust Arcmen",
         "Chefs, dancers and content creators on what it is like to shoot with "
         "Arcmen: comfortable on set, creative in the edit, and photos "
         "that come back better than imagined.",
@@ -168,6 +168,389 @@ SECTIONS = {
         "technique, brand storytelling and growing an audience that actually "
         "converts on social media.",
         "Blog", "Blog"),
+}
+
+# path -> {"h": heading, "p": [paragraph, ...]} added under each page's content.
+#
+# Portfolio and utility pages are intentionally light on words, which search
+# engines read as thin content. The Framer project owns the layout, so instead
+# of editing its markup this copy is carried by the hydration keeper and
+# written into the page after React finishes, right above the footer. Edit it
+# here and re-run the script. See the "extra copy" section in the keeper below.
+EXTRA = {
+    "/albums": {
+        "h": "A portfolio made to sell, not just to show",
+        "p": [
+            "Arcmen is a digital media marketing and production agency, and every "
+            "album here was planned like a campaign rather than a photoshoot. Each "
+            "project pairs carefully art-directed stills with the short-form video "
+            "and captions the same content will run as, so what you see is exactly "
+            "what performs on Instagram, on menus and in storefronts.",
+            "Browse by what your brand needs: cafe and restaurant media that makes "
+            "a space feel like a destination, food photography that makes menus "
+            "work harder, product and packaging shots that turn a listing into an "
+            "impulse buy, fashion and jewellery editorials, and event coverage "
+            "from brand collaborations to birthdays. The same Arcmen team produces, "
+            "grades and delivers every frame, so the look stays consistent across "
+            "the whole portfolio.",
+            "The albums double as case studies: each one shows the brief we started "
+            "from, the frames that made the final cut and how the content was meant "
+            "to be used afterwards. If you see a style you want for your own brand, "
+            "name the album when you write to us - it is the fastest way to make "
+            "sure we plan the same look for you.",
+            "Most projects here were delivered as one package: a full gallery graded "
+            "in a single consistent style, platform-sized crops and the short-form "
+            "video cut for stories and reels. That is why the work does not end up "
+            "stranded on a hard drive - it becomes the brand's feed, its menu, its "
+            "ads and its storefront.",
+            "Want a treatment like these for your own launch? Email "
+            "arcmen.team@gmail.com or call +91 79936 80585 and we will plan it "
+            "with you before a single rupee is spent.",
+        ],
+    },
+    "/blog": {
+        "h": "Field notes on content that converts",
+        "p": [
+            "This blog is where the Arcmen team writes about the side of content "
+            "nobody sees on the feed: the research, the lighting decisions, the "
+            "edit and the captions that decide whether a post stops the scroll. "
+            "Every guide is grounded in work we have actually produced for cafes, "
+            "restaurants, clothing labels and product brands.",
+            "Expect practical posts on shooting golden hour, styling food and "
+            "product frames, capturing candid and portrait work, building a "
+            "portfolio that wins clients, and the camera, editing and colour "
+            "resources we reach for every week. Where a post mentions gear, we "
+            "only recommend what we actually own.",
+            "Prefer learning in short bursts? Every post here is written to be read "
+            "in under five minutes, with the key points repeated at the end as a "
+            "checklist you can screenshot. You will find posts on golden-hour "
+            "technique, food styling, candid and portrait work, portfolio building "
+            "and the editing tools we use daily. Longer deep-dives appear on this "
+            "page over time, while quick daily tips go out on our Instagram "
+            "stories - choose the format that suits how you like to learn.",
+            "Articles go live as we wrap real client projects, so treat this as a "
+            "working log rather than a content calendar. Follow @arcmen_team on "
+            "Instagram, or use the contact page to brief us directly.",
+        ],
+    },
+    "/contact": {
+        "h": "Every project starts with a brief, not a quote",
+        "p": [
+            "Arcmen works with restaurants, cafes, product and fashion brands, and "
+            "event teams across India. Before we quote, we want to understand "
+            "three things: what you make, where the content will live, and what it "
+            "needs to do - more reach, more footfall, or a catalogue that finally "
+            "looks as good as your product.",
+            "We shoot brand campaigns, food and beverage menus, product and "
+            "packaging lines, fashion and jewellery collections, pet and family "
+            "celebrations, and live events from launches to workshops. Most "
+            "projects deliver stills and reels together, edited per platform and "
+            "ready to publish, so you are not left with a hard drive and a to-do "
+            "list.",
+            "What happens after you write in? We reply within one working day with a "
+            "short questionnaire, then a treatment and a fixed quote. Once you "
+            "approve, we book the date, send a shot list and styling notes ahead of "
+            "the shoot, and deliver within the agreed turnaround - usually seven to "
+            "ten days for a full gallery plus reels. The process is the same "
+            "whether you run a single cafe, a fashion label or a national brand, "
+            "and it is written down so you always know what happens next.",
+            "Email arcmen.team@gmail.com with a few references - even screenshots "
+            "of posts you like - or call +91 79936 80585. We will come back within "
+            "a day with a plan, a timeline and a clear quote.",
+        ],
+    },
+    "/about": {
+        "h": "Plan. Shoot. Run.",
+        "p": [
+            "Arcmen is a digital media marketing and production agency based in "
+            "Hyderabad. Our process is deliberately simple: research first, shoot "
+            "second, and manage the accounts afterwards. The research stage "
+            "decides the audience, the platform and the single message a campaign "
+            "must land, and every frame on set is directed towards that message "
+            "rather than towards looking nice.",
+            "Production stays small on purpose - one team, one direction, and an "
+            "edit that follows the plan we agreed on. Once content ships we keep "
+            "going: posting schedules, captions, hashtags, story templates and "
+            "monthly reporting, so a shoot keeps compounding for months instead of "
+            "ending on the day.",
+            "New to working with an agency? The first step costs nothing: send us a "
+            "product photo, a menu or even a rough idea, and we will come back with "
+            "the three or four content formats we would make for it and what each "
+            "would cost. No retainers, no jargon, and no shoot starts until you "
+            "have approved the plan in writing.",
+            "That combination - strategy, production and account management under "
+            "one roof - is what most brands split between three agencies. See it "
+            "in action across the albums, then tell us about your brand on the "
+            "contact page.",
+        ],
+    },
+    "/reviews": {
+        "h": "More than testimonials: patterns",
+        "p": [
+            "Read the reviews closely and the same themes keep coming up. Clients "
+            "mention being guided on set until the awkwardness disappears. They "
+            "mention edits that arrive on time, sized for the platforms they "
+            "actually post to. And they mention the outtakes - being sent the "
+            "frames that did not make the cut, which often turn out to be the ones "
+            "that work best in stories.",
+            "That consistency is not an accident. Every Arcmen project runs the "
+            "same way: a plan agreed before the shoot, direction on the day, and "
+            "an edit delivered against that plan. The reviews below are what "
+            "happens when that process meets clients who care about their brands.",
+            "If you want references beyond the reviews shown here, just ask - we "
+            "share the raw selects of past shoots freely, because a portfolio "
+            "should prove itself before a contract is signed. Most of our clients "
+            "book their first project after a single conversation.",
+            "Join them - brief us through the contact page.",
+        ],
+    },
+    "/albums/groove-with-yogi": {
+        "h": "Event coverage with energy to spare",
+        "p": [
+            "Groove with Yogi was an early-morning dance and fitness event, and "
+            "the coverage had to match its energy: participants in motion, light "
+            "streaming in, and no posed moments that would break the mood. We "
+            "worked with fast lenses and existing light to keep the atmosphere "
+            "honest and the movement sharp.",
+            "Same-day selects meant the organisers could post while the event was "
+            "still trending, and the full gallery gave the community team content "
+            "for weeks afterwards. For events, speed matters as much as quality: "
+            "the content has to land while people are still talking about the day.",
+            "We always pair event stills with short video pulls on the day, because "
+            "a dance floor moves faster than a photo can describe. The reels from "
+            "this shoot were cut the same evening and handed over with the gallery, "
+            "so the organisers could go live while the momentum from the event was "
+            "still building.",
+            "Planning an event or a launch? Let us cover it - start on the contact "
+            "page.",
+        ],
+    },
+    "/albums/carnival-chaos": {
+        "h": "Packaging that has to perform",
+        "p": [
+            "Carnival Chaos is a case study in making boxes do the selling. "
+            "Instead of catalogue-style shots, we photographed the packaging as "
+            "the hero - bold angles, sculpted light and shallow depth that turn a "
+            "carton into something worth double-tapping. Colour and contrast were "
+            "graded to pop on small screens, because that is where the product "
+            "would live.",
+            "Every frame was also planned for reuse: the same setups produced "
+            "product stills for listings, lifestyle crops for ads and cut-downs "
+            "for stories. That efficiency is standard for our product work - one "
+            "shoot, every asset the launch needs.",
+            "Behind the scenes mattered for this launch too. We captured making-of "
+            "frames - the packaging being packed, styled and lit - that work "
+            "perfectly for stories, giving the brand an extra layer of content "
+            "without a second shoot day.",
+            "Launching packaging soon? Book a planning call on the contact page.",
+        ],
+    },
+    "/albums/modelling-in-nift": {
+        "h": "Editorial fashion from a student-run set",
+        "p": [
+            "These NIFT frames treat modelling as design work: avant-garde "
+            "styling, handcrafted garments and poses that move rather than stand. "
+            "We mixed dramatic lighting with clean frames so each outfit reads as "
+            "its own story, and the editorial direction came from working closely "
+            "with the designers on set.",
+            "Shoots like this are portfolio builders for everyone involved: the "
+            "designers leave with lookbook-grade imagery and the models leave with "
+            "frames that show range beyond a studio smile. When fashion is the "
+            "subject, collaboration on set is what makes the images feel authored "
+            "rather than produced.",
+            "The day also covered the practical side of a lookbook: clean "
+            "catalogue-style frames for portfolios and applications alongside the "
+            "editorial shots for social. Splitting the set between the two meant "
+            "the designers never had to choose between looking credible and "
+            "looking creative - they got both from one session.",
+            "Have a collection or a lookbook to shoot? The contact page is where "
+            "it starts.",
+        ],
+    },
+    "/albums/sree-kanya-jewellers": {
+        "h": "Jewellery, lit for brilliance",
+        "p": [
+            "Sree Kanya Jewellery's collections needed lighting that makes gold, "
+            "diamonds and intricate work look their best without losing the "
+            "emotion behind the piece. We combined rich, warm product light with "
+            "close detail shots, and staged the jewellery in the contexts where it "
+            "is actually worn - weddings, festivals and celebrations.",
+            "Jewellery photography is one of the hardest product disciplines: it "
+            "demands sharpness, true colour and reflection control in every "
+            "frame. The deliverable set - hero shots, detail crops and lifestyle "
+            "frames - gives the brand consistent content for e-commerce, bridal "
+            "enquiries and festive campaigns.",
+            "We planned the display crops on set too: squares for Instagram, "
+            "verticals for stories and reels, and wide frames for the website "
+            "banner. Jewellery brands live on consistency across those formats, "
+            "and deciding the crops before delivery is far cheaper than "
+            "reshooting later.",
+            "Shooting a collection with sparkle? Let us talk on the contact page.",
+        ],
+    },
+    "/albums/brew-commune": {
+        "h": "A cafe, captured as a destination",
+        "p": [
+            "Brew Commune's brief was about feeling as much as food: the coffee, "
+            "the plates and the room all had to read as one warm experience. We "
+            "planned the day around natural light windows and styled every "
+            "tabletop, so the final set works on the menu, the Instagram grid and "
+            "the website without re-edits.",
+            "The wider frames show the space as somewhere worth travelling to; the "
+            "close-ups sell the food. That split - ambience plus appetite - is the "
+            "pattern behind the strongest cafe accounts, and it is the frame plan "
+            "we deliver for any hospitality brand.",
+            "Delivery was organised by usage so nothing goes to waste: a grid-first "
+            "set for social, tighter crops for the menu and wider lifestyle shots "
+            "for the website and features. Clear handover like that is why the "
+            "content keeps being used months later instead of sitting in a folder.",
+            "Running a cafe? This is what a full content day looks like. Reach out "
+            "on the contact page.",
+        ],
+    },
+    "/albums/indian-darbar": {
+        "h": "A restaurant story in colour and light",
+        "p": [
+            "Indian Darbar is rich in colour, and the shoot leaned into it: deep "
+            "reds and golds, dramatic side light and plating detailed enough to "
+            "show the craft without losing the restaurant's warmth. The menu, the "
+            "room and the people are all treated as one story - authentic Indian "
+            "food served with genuine hospitality.",
+            "We delivered dish hero shots, ambience frames and reel-ready clips "
+            "from the same session, so the restaurant could refresh its menu, its "
+            "socials and its delivery listings in one go. Hospitality photography "
+            "works hardest when it gives a venue one consistent look everywhere it "
+            "appears.",
+            "The stills and clips were graded to one warm profile before delivery, "
+            "so the restaurant's Instagram, Google listing and delivery apps all "
+            "show the same colours. That single visual identity is often the "
+            "biggest upgrade a food brand can make - recognition happens before "
+            "the caption is read.",
+            "Your kitchen tells a story too - let us frame it. Contact us to plan "
+            "the shoot.",
+        ],
+    },
+    "/albums/cafe-resolution": {
+        "h": "Heritage interiors, cinematic light",
+        "p": [
+            "Cafe Resolution's Victorian charm asked for a softer approach: warm "
+            "tones, long shadows and the details - moulding, brass, ceramics - "
+            "that most cafe shoots skip. We let the architecture set the palette "
+            "and photographed the food within it, so the cafe's character sells "
+            "the meal as much as the plate does.",
+            "The result is a bank of imagery that works everywhere from a "
+            "heritage feature to a Saturday brunch post. When the space is the "
+            "brand, the photography's job is to make people want to sit in it - "
+            "not just eat what it serves.",
+            "We also captured the quieter in-between moments - steam rising, a "
+            "barista at work, tables set before service - because those are the "
+            "frames that make a heritage cafe feel alive rather than staged. Those "
+            "small details are what separate one venue's feed from its "
+            "competitors'.",
+            "Shooting a space with a story? Tell us about it on the contact page.",
+        ],
+    },
+    "/albums/smoke": {
+        "h": "Cozy cafe energy, frame by frame",
+        "p": [
+            "Smoke & Sizzle is the kind of cafe people visit for the feeling as "
+            "much as the coffee, so the shoot mixed warm window light with candid "
+            "moments of the room coming alive. We shot wide enough to capture the "
+            "atmosphere and tight enough to make the food and drinks feel "
+            "immediate.",
+            "A cafe account lives on that balance: lifestyle frames that make "
+            "people want to visit, and dish shots that make them order before they "
+            "arrive. Both came out of the same afternoon, which is how we keep "
+            "cafe shoots efficient without losing the mood.",
+            "The final edit came in two sets: a lifestyle set for the cafe's own "
+            "feed and a menu set matched to each signature dish and drink. Having "
+            "both ready means the team can promote daily specials without "
+            "commissioning a new shoot every time the menu changes.",
+            "Your cafe has its own vibe - let us capture it. Start on the contact "
+            "page.",
+        ],
+    },
+    "/albums/kraftkittens": {
+        "h": "Handmade product, aesthetic minimal",
+        "p": [
+            "Kraft Kittens makes scrunchies, lockets and bracelets by hand, and "
+            "the brief was to make each piece feel personal rather than "
+            "industrial. We shot on minimal, cosy setups with soft daylight and "
+            "close texture detail, so the craftsmanship reads - seams, threads "
+            "and the small imperfections that make handmade feel human.",
+            "The frames were built to work as an Instagram shop aesthetic and as "
+            "product listings, where a single strong image can decide a sale. For "
+            "a young brand, consistent product photography is often the "
+            "difference between looking like a hobby and looking like a business.",
+            "Because the brand is young, every piece was shot on a consistent "
+            "background and crop so the shop grid reads as one collection rather "
+            "than a random mix. Small decisions like that are what make a handmade "
+            "brand look established enough to command its prices.",
+            "Selling something handmade? Let us make it look the part - contact "
+            "us.",
+        ],
+    },
+    "/albums/kajubirthday": {
+        "h": "A dog's big day, captured honestly",
+        "p": [
+            "Kaju's birthday was a party where the guest of honour had four legs, "
+            "and the photography had to move at his pace. We worked quickly and "
+            "candidly - cake ceremony, guests and the chaos in between - because "
+            "the shots that matter at a pet event are the ones nobody can stage.",
+            "The album doubles as more than a memory: it is the kind of warm, "
+            "personality-led content that pet brands and pet-friendly venues use "
+            "to build community. If your event has a story this personal, honest "
+            "coverage will always beat a produced shoot.",
+            "The gallery was edited for quick sharing: a tight set of highlights "
+            "for social plus the full story for the family. Pet content performs "
+            "best when it feels spontaneous, so we kept the grade light and "
+            "resisted over-posing moments that were already perfect as they "
+            "happened.",
+            "Celebrating something worth remembering? Let us document it - head "
+            "to the contact page.",
+        ],
+    },
+    "/albums/beyondlabel": {
+        "h": "Streetwear, styled to move",
+        "p": [
+            "Beyond Label is streetwear with an attitude, and the shoot was built "
+            "around movement rather than static poses. We used fast shutter work, "
+            "strong colour blocking and directional light so the garments read at "
+            "a glance - the way they do on a feed where you have one second to "
+            "stop a thumb.",
+            "Stills and short video came out of the same setups, so Beyond Label "
+            "left with reels, stories and a product edit that all share one visual "
+            "language. When a collection is about confidence, the photography has "
+            "to carry that same energy, and the frames can be reused across the "
+            "store and the ads.",
+            "Every outfit was also captured on a clean background for the online "
+            "store, so the brand can sell the same look it showed in the campaign. "
+            "Streetwear sells on attitude first and fabric second, and this shoot "
+            "kept both - energy in the editorial frames, clarity in the product "
+            "frames.",
+            "Want motion in your next product shoot? The contact page is the "
+            "fastest way to start the conversation.",
+        ],
+    },
+    "/albums/rasyumm": {
+        "h": "Food photography that sells the plate",
+        "p": [
+            "Rasyumm's food photography focused on what makes a dish worth "
+            "ordering: colour, texture and the details that signal freshness. We "
+            "worked through the menu dish by dish and chose angles that flatter "
+            "each plate rather than applying one formula, because a curry and a "
+            "dessert need very different treatment.",
+            "The set was designed to double as menu, social and delivery-listing "
+            "content, so the restaurant gets one visual language everywhere its "
+            "food appears. That consistency is what turns casual viewers into "
+            "diners who recognise a dish before they read its name.",
+            "We delivered the set in menu order with a note on which angle each "
+            "dish suits, so the kitchen can update the menu and the delivery "
+            "platforms without guessing. Food photography only earns its keep if "
+            "the team can actually use it every week, not just admire it once.",
+            "Hungry for better food imagery? Brief us on the contact page.",
+        ],
+    },
 }
 
 ALBUM_BY_SLUG = {s: (n, c) for s, n, c in ALBUMS}
@@ -469,6 +852,7 @@ KEEPER = """    <!-- Start of bodyEnd -->
         var VIDEO_LABEL = __VIDEO__;
         var MAILTO = __MAILTO__;
         var SOCIALS = __SOCIALS__;
+        var COPY = __COPY__;
         var SVG_NS = "http://www.w3.org/2000/svg";
 
         function keyFor(el) {
@@ -697,11 +1081,68 @@ KEEPER = """    <!-- Start of bodyEnd -->
           }
         }
 
+        // ------------------------------------------------------- extra copy ---
+        // Portfolio and utility pages are intentionally light on words, which
+        // search engines read as thin content. The copy in the EXTRA table at
+        // the top of tools/build-seo.py is real on-page text that Framer does
+        // not know about, so - like the social buttons above - it has to be
+        // created after hydration. It is anchored to the footer rather than to
+        // a Framer layer name, so it survives re-exports of the design.
+
+        function copyAnchor() {
+          var f = document.querySelector("footer");
+          if (!f) return null;
+          var shared = f;
+          while (shared.parentElement &&
+              shared.parentElement.querySelectorAll("footer").length < 2) {
+            shared = shared.parentElement;
+          }
+          var host = shared.parentElement;
+          if (!host) return null;
+          var wrapper = f;
+          while (wrapper.parentElement !== host) wrapper = wrapper.parentElement;
+          return { host: host, wrapper: wrapper };
+        }
+
+        function copyNode(tag, css, parent, text) {
+          var n = document.createElement(tag);
+          if (css) n.setAttribute("style", css);
+          if (text) n.textContent = text;
+          if (parent) parent.appendChild(n);
+          return n;
+        }
+
+        function addCopy() {
+          if (!COPY || !COPY.p || !COPY.p.length) return;
+          if (document.querySelector("[data-arcmen-copy]")) return;
+          var at = copyAnchor();
+          if (!at) return;
+          var box = copyNode("div",
+            "box-sizing:border-box;width:100%;max-width:840px;margin:0 auto;" +
+            "padding:76px 24px 84px;color:rgb(250,245,234);");
+          box.setAttribute("data-arcmen-copy", "1");
+          if (COPY.h) {
+            copyNode("h2",
+              "font-family:inherit;font-size:13px;font-weight:600;" +
+              "letter-spacing:.18em;text-transform:uppercase;line-height:1.5;" +
+              "margin:0 0 22px;color:rgb(250,245,234);opacity:.75;",
+              box, COPY.h);
+          }
+          for (var i = 0; i < COPY.p.length; i++) {
+            copyNode("p",
+              "font-family:inherit;font-size:15px;line-height:1.8;" +
+              "margin:0 0 18px;color:rgb(250,245,234);opacity:.92;",
+              box, COPY.p[i]);
+          }
+          at.host.insertBefore(box, at.wrapper);
+        }
+
         function sweep() {
           fixHead();
           fixVideo();
           linkMail();
           addSocials();
+          addCopy();
           var imgs = document.getElementsByTagName("img");
           for (var i = 0; i < imgs.length; i++) fixImg(imgs[i]);
         }
@@ -793,7 +1234,8 @@ def social_payload(socials):
             for name, url, icon in socials]
 
 
-def keeper_for(alt_map, eager, title, robots=ROBOTS, video=None, socials=None):
+def keeper_for(alt_map, eager, title, robots=ROBOTS, video=None, socials=None,
+               copy=None):
     def js(obj):
         return json.dumps(obj, indent=10, ensure_ascii=False).replace("</", "<\\/")
     return (KEEPER
@@ -803,7 +1245,8 @@ def keeper_for(alt_map, eager, title, robots=ROBOTS, video=None, socials=None):
             .replace("__ROBOTS__", json.dumps(robots))
             .replace("__VIDEO__", json.dumps(video, ensure_ascii=False))
             .replace("__MAILTO__", json.dumps(EMAIL))
-            .replace("__SOCIALS__", js(social_payload(socials))))
+            .replace("__SOCIALS__", js(social_payload(socials)))
+            .replace("__COPY__", js(copy)))
 
 
 VIDEO_RE = re.compile(r"<video\b[^>]*>")
@@ -954,10 +1397,11 @@ def main():
         doc = rewrite_head(doc, job, job["graph"], stats)
         doc = rewrite_body(doc, alt, eager, stats)
         # The social buttons only exist on the contact page, so only its keeper
-        # carries them.
+        # carries them. Extra copy lives on the EXTRA table above.
         doc = doc.replace("</body>", keeper_for(
             alt, eager, job["title"], job.get("robots", ROBOTS),
             socials=SOCIALS if job["path"] == "/contact" else None,
+            copy=EXTRA.get(job["path"]),
         ) + "  </body>", 1)
         write(os.path.join(out, job["file_out"]), doc)
         report.append((job["file_out"], job["path"], len(alt),

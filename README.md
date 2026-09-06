@@ -46,7 +46,10 @@ robots/googlebot/bingbot, Open Graph and Twitter cards, a JSON-LD `@graph`
 ImageGallery where they apply), alt text on every image, `loading="lazy"` on
 everything but the logo and the hero, and a keeper script at the foot of the
 page. Page copy, album names, blog posts and the curated alt text live in the
-tables near the top of the script.
+tables near the top of the script. The portfolio and utility pages are
+intentionally light on words, so extra on-page copy for them lives in the
+`EXTRA` table and is written into the page by the keeper after hydration -
+edit it there and re-run the script, never in the exported HTML.
 
 Two details are deliberate and worth keeping:
 

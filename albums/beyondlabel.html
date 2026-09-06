@@ -473,7 +473,7 @@
 	<!-- Start of bodyEnd -->
     
     <!-- End of bodyEnd -->
-    <!-- Start of bodyEnd -->
+            <!-- Start of bodyEnd -->
     <!--
       Framer hydrates this page with React after load, and hydration resets a
       few things that matter for search: the title reverts to Framer's own page
@@ -537,6 +537,15 @@
         var VIDEO_LABEL = null;
         var MAILTO = "arcmen.team@gmail.com";
         var SOCIALS = null;
+        var COPY = {
+          "h": "Streetwear, styled to move",
+          "p": [
+                    "Beyond Label is streetwear with an attitude, and the shoot was built around movement rather than static poses. We used fast shutter work, strong colour blocking and directional light so the garments read at a glance - the way they do on a feed where you have one second to stop a thumb.",
+                    "Stills and short video came out of the same setups, so Beyond Label left with reels, stories and a product edit that all share one visual language. When a collection is about confidence, the photography has to carry that same energy, and the frames can be reused across the store and the ads.",
+                    "Every outfit was also captured on a clean background for the online store, so the brand can sell the same look it showed in the campaign. Streetwear sells on attitude first and fabric second, and this shoot kept both - energy in the editorial frames, clarity in the product frames.",
+                    "Want motion in your next product shoot? The contact page is the fastest way to start the conversation."
+          ]
+};
         var SVG_NS = "http://www.w3.org/2000/svg";
 
         function keyFor(el) {
@@ -765,11 +774,68 @@
           }
         }
 
+        // ------------------------------------------------------- extra copy ---
+        // Portfolio and utility pages are intentionally light on words, which
+        // search engines read as thin content. The copy in the EXTRA table at
+        // the top of tools/build-seo.py is real on-page text that Framer does
+        // not know about, so - like the social buttons above - it has to be
+        // created after hydration. It is anchored to the footer rather than to
+        // a Framer layer name, so it survives re-exports of the design.
+
+        function copyAnchor() {
+          var f = document.querySelector("footer");
+          if (!f) return null;
+          var shared = f;
+          while (shared.parentElement &&
+              shared.parentElement.querySelectorAll("footer").length < 2) {
+            shared = shared.parentElement;
+          }
+          var host = shared.parentElement;
+          if (!host) return null;
+          var wrapper = f;
+          while (wrapper.parentElement !== host) wrapper = wrapper.parentElement;
+          return { host: host, wrapper: wrapper };
+        }
+
+        function copyNode(tag, css, parent, text) {
+          var n = document.createElement(tag);
+          if (css) n.setAttribute("style", css);
+          if (text) n.textContent = text;
+          if (parent) parent.appendChild(n);
+          return n;
+        }
+
+        function addCopy() {
+          if (!COPY || !COPY.p || !COPY.p.length) return;
+          if (document.querySelector("[data-arcmen-copy]")) return;
+          var at = copyAnchor();
+          if (!at) return;
+          var box = copyNode("div",
+            "box-sizing:border-box;width:100%;max-width:840px;margin:0 auto;" +
+            "padding:76px 24px 84px;color:rgb(250,245,234);");
+          box.setAttribute("data-arcmen-copy", "1");
+          if (COPY.h) {
+            copyNode("h2",
+              "font-family:inherit;font-size:13px;font-weight:600;" +
+              "letter-spacing:.18em;text-transform:uppercase;line-height:1.5;" +
+              "margin:0 0 22px;color:rgb(250,245,234);opacity:.75;",
+              box, COPY.h);
+          }
+          for (var i = 0; i < COPY.p.length; i++) {
+            copyNode("p",
+              "font-family:inherit;font-size:15px;line-height:1.8;" +
+              "margin:0 0 18px;color:rgb(250,245,234);opacity:.92;",
+              box, COPY.p[i]);
+          }
+          at.host.insertBefore(box, at.wrapper);
+        }
+
         function sweep() {
           fixHead();
           fixVideo();
           linkMail();
           addSocials();
+          addCopy();
           var imgs = document.getElementsByTagName("img");
           for (var i = 0; i < imgs.length; i++) fixImg(imgs[i]);
         }
@@ -844,5 +910,7 @@
       })();
     </script>
     <!-- End of bodyEnd -->
+
+
   </body>
 </html>

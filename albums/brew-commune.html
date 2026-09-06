@@ -453,7 +453,7 @@
 	<!-- Start of bodyEnd -->
     
     <!-- End of bodyEnd -->
-    <!-- Start of bodyEnd -->
+            <!-- Start of bodyEnd -->
     <!--
       Framer hydrates this page with React after load, and hydration resets a
       few things that matter for search: the title reverts to Framer's own page
@@ -513,6 +513,15 @@
         var VIDEO_LABEL = null;
         var MAILTO = "arcmen.team@gmail.com";
         var SOCIALS = null;
+        var COPY = {
+          "h": "A cafe, captured as a destination",
+          "p": [
+                    "Brew Commune's brief was about feeling as much as food: the coffee, the plates and the room all had to read as one warm experience. We planned the day around natural light windows and styled every tabletop, so the final set works on the menu, the Instagram grid and the website without re-edits.",
+                    "The wider frames show the space as somewhere worth travelling to; the close-ups sell the food. That split - ambience plus appetite - is the pattern behind the strongest cafe accounts, and it is the frame plan we deliver for any hospitality brand.",
+                    "Delivery was organised by usage so nothing goes to waste: a grid-first set for social, tighter crops for the menu and wider lifestyle shots for the website and features. Clear handover like that is why the content keeps being used months later instead of sitting in a folder.",
+                    "Running a cafe? This is what a full content day looks like. Reach out on the contact page."
+          ]
+};
         var SVG_NS = "http://www.w3.org/2000/svg";
 
         function keyFor(el) {
@@ -741,11 +750,68 @@
           }
         }
 
+        // ------------------------------------------------------- extra copy ---
+        // Portfolio and utility pages are intentionally light on words, which
+        // search engines read as thin content. The copy in the EXTRA table at
+        // the top of tools/build-seo.py is real on-page text that Framer does
+        // not know about, so - like the social buttons above - it has to be
+        // created after hydration. It is anchored to the footer rather than to
+        // a Framer layer name, so it survives re-exports of the design.
+
+        function copyAnchor() {
+          var f = document.querySelector("footer");
+          if (!f) return null;
+          var shared = f;
+          while (shared.parentElement &&
+              shared.parentElement.querySelectorAll("footer").length < 2) {
+            shared = shared.parentElement;
+          }
+          var host = shared.parentElement;
+          if (!host) return null;
+          var wrapper = f;
+          while (wrapper.parentElement !== host) wrapper = wrapper.parentElement;
+          return { host: host, wrapper: wrapper };
+        }
+
+        function copyNode(tag, css, parent, text) {
+          var n = document.createElement(tag);
+          if (css) n.setAttribute("style", css);
+          if (text) n.textContent = text;
+          if (parent) parent.appendChild(n);
+          return n;
+        }
+
+        function addCopy() {
+          if (!COPY || !COPY.p || !COPY.p.length) return;
+          if (document.querySelector("[data-arcmen-copy]")) return;
+          var at = copyAnchor();
+          if (!at) return;
+          var box = copyNode("div",
+            "box-sizing:border-box;width:100%;max-width:840px;margin:0 auto;" +
+            "padding:76px 24px 84px;color:rgb(250,245,234);");
+          box.setAttribute("data-arcmen-copy", "1");
+          if (COPY.h) {
+            copyNode("h2",
+              "font-family:inherit;font-size:13px;font-weight:600;" +
+              "letter-spacing:.18em;text-transform:uppercase;line-height:1.5;" +
+              "margin:0 0 22px;color:rgb(250,245,234);opacity:.75;",
+              box, COPY.h);
+          }
+          for (var i = 0; i < COPY.p.length; i++) {
+            copyNode("p",
+              "font-family:inherit;font-size:15px;line-height:1.8;" +
+              "margin:0 0 18px;color:rgb(250,245,234);opacity:.92;",
+              box, COPY.p[i]);
+          }
+          at.host.insertBefore(box, at.wrapper);
+        }
+
         function sweep() {
           fixHead();
           fixVideo();
           linkMail();
           addSocials();
+          addCopy();
           var imgs = document.getElementsByTagName("img");
           for (var i = 0; i < imgs.length; i++) fixImg(imgs[i]);
         }
@@ -820,5 +886,7 @@
       })();
     </script>
     <!-- End of bodyEnd -->
+
+
   </body>
 </html>
