@@ -115,7 +115,7 @@ POSTS = [
     ("elevate-your-photos-with-my-signature-color-grading-presets",
      "Arcmen – Where Real Brands Get Real Reach", "2024-12-02", "Article"),
     ("capturing-the-magic-of-golden-hour-a-photographer-s-guide",
-     "Capturing the magic of golden hour: a photographer's guide",
+     "The Photographer's Guide to Golden Hour",
      "2024-05-06", "Tips"),
     ("a-travel-photography-adventure",
      "A Travel Photography Adventure", "2024-05-04", "Article"),
