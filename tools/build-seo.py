@@ -178,6 +178,27 @@ SECTIONS = {
 # written into the page after React finishes, right above the footer. Edit it
 # here and re-run the script. See the "extra copy" section in the keeper below.
 EXTRA = {
+    "/": {
+        "h": "Digital media marketing agency in Hyderabad",
+        "p": [
+            "Arcmen is a digital media marketing agency in Hyderabad that plans "
+            "campaigns first and shoots second. Restaurants, cafes, fashion "
+            "labels, jewellery brands and product companies bring us their "
+            "launches, menus and collections because we build content as one "
+            "system: strategy, shoot, edit, captions and the monthly reporting "
+            "that shows whether any of it worked.",
+            "Social media marketing in Hyderabad is crowded, so we win on "
+            "production depth. Because the same team shoots, designs and manages "
+            "the accounts, nothing gets lost between an agency and a freelancer - "
+            "the feed, the website and the ads all share one look, one voice and "
+            "one message.",
+            "Looking for a digital media marketing company in Hyderabad that can "
+            "deliver the content it promises? Browse the work in our albums, "
+            "then email arcmen.team@gmail.com or call +91 79936 80585. We will "
+            "put together a plan for your brand and a straight quote - usually "
+            "within one working day.",
+        ],
+    },
     "/albums": {
         "h": "A portfolio made to sell, not just to show",
         "p": [
@@ -1288,7 +1309,8 @@ def rebuild_home(current, pristine, alt_map, eager, title, video, stats):
     doc = label_video(doc, video, stats)
     return doc.replace(
         "</body>",
-        keeper_for(alt_map, eager, title, ROBOTS, video) + "  </body>", 1)
+        keeper_for(alt_map, eager, title, ROBOTS, video,
+                   copy=EXTRA.get("/")) + "  </body>", 1)
 
 
 # --------------------------------------------------------------- alt text ----
