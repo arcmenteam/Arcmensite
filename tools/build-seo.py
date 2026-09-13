@@ -23,9 +23,17 @@ import json
 import os
 import re
 import sys
+import time
+from datetime import datetime, timezone
+from email.utils import format_datetime
 
 HOST = "https://www.arcmen.in"
 BRAND = "Arcmen"
+TWITTER = "@Arcmen_team"
+# Date stamped on section and album pages (posts carry their real publish
+# date). It is the day the SEO layer was last rebuilt, which is what lastmod
+# is supposed to mean here.
+BUILD_DATE = time.strftime("%Y-%m-%d")
 ALT_BRAND = "Arcmen"
 LOGO = "https://framerusercontent.com/images/3lcJMoudbRGL6KxAK4m0lIcnpc.png"
 LOGO_KEY = "3lcJMoudbRGL6KxAK4m0lIcnpc.png"
@@ -672,6 +680,9 @@ def org_node():
                  "url": LOGO, "caption": BRAND + " logo"},
         "image": {"@id": HOST + "/#logo"},
         "areaServed": {"@type": "Country", "name": "India"},
+        "address": {"@type": "PostalAddress", "addressCountry": "IN",
+                    "addressRegion": "Telangana",
+                    "addressLocality": "Hyderabad"},
         "sameAs": [url for _, url, _ in live_socials()],
         "knowsAbout": SERVICES,
         "makesOffer": [{"@type": "Offer",
@@ -747,6 +758,20 @@ def rewrite_head(doc, page, graph, stats):
     url, title, desc = page["url"], page["title"], page["desc"]
     rb = page.get("robots", ROBOTS)
 
+    # Framer writes lang="en-US" on every page; the studio is in India, and
+    # Google uses the lang attribute as a language signal, not a country one —
+    # but a wrong region tagging still muddies en-IN targeting.
+    head = head.replace('<html lang="en-US">', '<html lang="en-IN">', 1)
+    # The Framer project ships no twitter:site; put it straight after the card
+    # type so the X block reads as one unit. Skipped when a fresh export
+    # already carries one.
+    if '<meta name="twitter:site"' not in head:
+        head, n = re.subn(r'(<meta name="twitter:card" content="[^"]*"\s*/?>)',
+                          '\\1\n    <meta name="twitter:site" content="%s" />'
+                          % TWITTER, head, count=1)
+        if not n:
+            stats.setdefault("missing", []).append("twitter:site anchor")
+
     head = re.sub(r"(<title>)(.*?)(</title>)",
                   lambda m: m.group(1) + H.escape(title) + m.group(3),
                   head, count=1, flags=re.S)
@@ -785,6 +810,8 @@ def rewrite_head(doc, page, graph, stats):
         '    <meta property="og:image:alt" content="%s" />'
         % H.escape(page["image_alt"], True),
         '    <meta name="twitter:image" content="%s" />' % H.escape(image, True),
+        '    <link rel="alternate" type="application/rss+xml" '
+        'title="Arcmen blog" href="/feed.xml" />',
         '    <meta name="author" content="%s" />' % BRAND,
         '    <link rel="preconnect" href="https://framerusercontent.com" crossorigin />',
         '    <link rel="dns-prefetch" href="https://framerusercontent.com" />',
@@ -814,9 +841,26 @@ def body_start(doc):
     return doc.index("<body", end if end >= 0 else 0)
 
 
+# The Framer template labels the logo link with placeholder text aimed at a
+# lone photographer ("View my full photography portfolio including landscape,
+# portrait, and travel photography"). Matched by the layer name rather than
+# the text so a re-export with tweaked placeholder wording still gets fixed.
+LOGO_ARIA_RE = re.compile(
+    r'(<div\b[^>]*aria-label=")[^"]*'
+    r'("(?=[^>]*data-framer-name="Photographer Icon"))')
+LOGO_ARIA_TEXT = "%s — go to the home page" % BRAND# The Framer template labels some images with alt text crediting its own
+# author ("About Me Real Mehedi Free Framer Template Photography"). Framer
+# ships these non-empty, so the "fill empty alt" rule skips them and crawlers
+# reading the raw HTML see template junk. Matched by substring so any other
+# placeholder from the same template is caught too.
+JUNK_ALT_RE = re.compile(r"Mehedi|Free Framer Template", re.I)
+
+
 def rewrite_body(doc, alt_map, eager, stats):
     cut = body_start(doc)
     head, body = doc[:cut], doc[cut:]
+    body = LOGO_ARIA_RE.sub(lambda m: m.group(1) + LOGO_ARIA_TEXT + m.group(2),
+                            body)
 
     def fix(m):
         tag = m.group(0)
@@ -827,10 +871,11 @@ def rewrite_body(doc, alt_map, eager, stats):
         alt = alt_map.get(k)
         if alt:
             cur = re.search(r'\balt="([^"]*)"', tag)
+
             if cur is None:
                 tag = tag[:-1].rstrip() + ' alt="%s">' % H.escape(alt, True)
                 stats["alt_added"] += 1
-            elif not cur.group(1).strip():
+            elif not cur.group(1).strip() or JUNK_ALT_RE.search(cur.group(1)):
                 tag = tag[:cur.start(1)] + H.escape(alt, True) + tag[cur.end(1):]
                 stats["alt_added"] += 1
         if k not in eager and "loading=" not in tag:
@@ -1431,14 +1476,16 @@ def main():
                        stats.get("missing", [])))
 
     write(os.path.join(out, "sitemap.xml"), build_sitemap(jobs))
+    write(os.path.join(out, "feed.xml"), build_feed(jobs))
     print("%-34s %-42s %4s %4s %5s  %s"
           % ("file", "url path", "alt", "set", "lazy", "head tags not found"))
     for row in report:
         print("%-34s %-42s %4d %4d %5d  %s"
               % (row[0], row[1], row[2], row[3], row[4],
                  ", ".join(row[5]) or "-"))
-    print("\n%d pages written, sitemap has %d urls"
-          % (len(jobs) + 1, sum(1 for j in jobs if j.get("in_sitemap")) + 1))
+    print("\n%d pages written, sitemap has %d urls, feed has %d posts"
+          % (len(jobs) + 1, sum(1 for j in jobs if j.get("in_sitemap")) + 1,
+             sum(1 for j in jobs if j["path"].startswith("/blog/"))))
 
 
 SUBJECTS = {
@@ -1455,7 +1502,7 @@ def base_job(path, doc, title, desc, subject):
     image = first_content_image(doc)
     return {"path": path, "url": HOST + path, "doc": doc, "title": title,
             "desc": desc, "subject": subject, "image": image,
-            "image_alt": title, "in_sitemap": True}
+            "image_alt": title, "in_sitemap": True, "lastmod": BUILD_DATE}
 
 
 def plan_pages(src, album_docs, known):
@@ -1538,7 +1585,8 @@ def plan_pages(src, album_docs, known):
                   "publisher": {"@id": HOST + "/#organization"},
                   "mainEntityOfPage": {"@id": job["url"] + "#webpage"}}]
         job.update(graph=graph, file_out="blog/%s.html" % slug,
-                   priority="0.6", changefreq="yearly", published=date)
+                   priority="0.6", changefreq="yearly", published=date,
+                   lastmod=date)
         jobs.append(job)
 
     doc = read(os.path.join(src, "404.html"))
@@ -1575,6 +1623,7 @@ def build_sitemap(jobs):
         parts.append(
             "  <url>\n"
             "    <loc>%s</loc>\n"
+            "    <lastmod>%s</lastmod>\n"
             "    <changefreq>%s</changefreq>\n"
             "    <priority>%s</priority>\n"
             "    <image:image>\n"
@@ -1582,10 +1631,53 @@ def build_sitemap(jobs):
             "      <image:title>%s</image:title>\n"
             "    </image:image>\n"
             "  </url>\n"
-            % (job["url"], job["changefreq"], job["priority"],
+            % (job["url"], job["lastmod"], job["changefreq"], job["priority"],
                H.escape(job["image"]), H.escape(job["title"])))
     parts.append("</urlset>\n")
     return "".join(parts)
+
+
+def build_feed(jobs):
+    """RSS 2.0 feed of the blog, newest first.
+
+    A feed gives the blog a machine-readable fresh-content signal for readers
+    and aggregators without adding pages, and pairs with the rel=alternate
+    link rewrite_head emits on every page. Posts are ordered by their real
+    publish date (their sitemap lastmod).
+    """
+    def rfc822(day):
+        return format_datetime(
+            datetime.strptime(day, "%Y-%m-%d").replace(tzinfo=timezone.utc))
+
+    items = []
+    for job in sorted((j for j in jobs if j["path"].startswith("/blog/")),
+                      key=lambda j: j["lastmod"], reverse=True):
+        items.append(
+            "    <item>\n"
+            "      <title>%s</title>\n"
+            "      <link>%s</link>\n"
+            "      <guid isPermaLink=\"true\">%s</guid>\n"
+            "      <pubDate>%s</pubDate>\n"
+            "      <description>%s</description>\n"
+            "    </item>\n"
+            % (H.escape(job["title"]), job["url"], job["url"],
+               rfc822(job["lastmod"]), H.escape(job["desc"])))
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        "<!-- RSS feed for the %s blog — generated by tools/build-seo.py -->\n"
+        '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">\n'
+        "  <channel>\n"
+        "    <title>%s blog</title>\n"
+        "    <link>%s/blog</link>\n"
+        "    <description>Photography technique, brand storytelling and "
+        "content that converts — from the %s team.</description>\n"
+        "    <language>en-in</language>\n"
+        '    <atom:link href="%s/feed.xml" rel="self" '
+        'type="application/rss+xml" />\n'
+        "%s"
+        "  </channel>\n"
+        "</rss>\n"
+    ) % (BRAND, BRAND, HOST, BRAND, HOST, "".join(items))
 
 
 if __name__ == "__main__":

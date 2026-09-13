@@ -17,6 +17,7 @@ added on top. Every image, video and font still loads from Framer's CDN
 | `blog/<slug>.html` ×8 | `/blog/<slug>` |
 | `404.html` | not found (served by Vercel; `noindex, follow`) |
 | `robots.txt`, `sitemap.xml` | crawl rules and the 26 indexable URLs |
+| `feed.xml` | RSS feed of the blog (generated; linked from every page) |
 | `vercel.json` | `cleanUrls` + `trailingSlash: false` + security headers |
 | `.vercelignore` | keeps `tools/`, `README.md` and `.claude/` out of the deploy |
 
@@ -41,7 +42,10 @@ The export directory is expected to hold `index.html`, `about.html`,
 `albums__<slug>.html` and `blog__<slug>.html`.
 
 What the script adds per page: a unique title and description, canonical,
-robots/googlebot/bingbot, Open Graph and Twitter cards, a JSON-LD `@graph`
+robots/googlebot/bingbot, Open Graph and Twitter cards (including `twitter:site`),
+a `lang="en-IN"` html tag and a truthful home-page aria-label on the logo (both
+are Framer template leftovers — `en-US` and a lone-photographer blurb), the
+`<link rel="alternate" type="application/rss+xml">` feed link, a JSON-LD `@graph`
 (Organization, WebSite, WebPage, BreadcrumbList, plus ItemList / BlogPosting /
 ImageGallery where they apply), alt text on every image, `loading="lazy"` on
 everything but the logo and the hero, and a keeper script at the foot of the
@@ -99,7 +103,10 @@ keeps that head as-is and rebuilds only its body.
 
 The home page's `<url>` block in `sitemap.xml` — the one with the 13 image
 entries and the video — is also preserved rather than regenerated; the other 25
-entries are rebuilt on every run.
+entries are rebuilt on every run. Every entry carries `<lastmod>`: section and
+album pages are stamped with the build date (the `BUILD_DATE` constant), blog
+posts with their publish date. `feed.xml` is rebuilt from the same post table,
+newest first.
 
 ## Local preview
 
