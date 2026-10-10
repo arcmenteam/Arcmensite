@@ -21,7 +21,6 @@
     <!-- X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@Arcmen_team" />
-    <link rel="alternate" type="application/rss+xml" title="Arcmen blog" href="/feed.xml" />
     <meta name="twitter:title" content="Groove with Yogi — Event photography by Arcmen">
     <meta name="twitter:description" content="Groove with Yogi was an energetic morning wellness event that brought together music, movement, and mindfulness. We captured the vibrant atmosphere as participants enjoyed a unique…">
 	
@@ -195,6 +194,7 @@
     <meta property="og:image" content="https://framerusercontent.com/images/bq3UIkFb2BeiOY7nb2d3m3vmvc.jpg" />
     <meta property="og:image:alt" content="Groove with Yogi — Event photography by Arcmen" />
     <meta name="twitter:image" content="https://framerusercontent.com/images/bq3UIkFb2BeiOY7nb2d3m3vmvc.jpg" />
+    <link rel="alternate" type="application/rss+xml" title="Arcmen blog" href="/feed.xml" />
     <meta name="author" content="Arcmen" />
     <link rel="preconnect" href="https://framerusercontent.com" crossorigin />
     <link rel="dns-prefetch" href="https://framerusercontent.com" />
@@ -234,6 +234,12 @@
       "areaServed": {
         "@type": "Country",
         "name": "India"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN",
+        "addressRegion": "Telangana",
+        "addressLocality": "Hyderabad"
       },
       "sameAs": [
         "https://www.instagram.com/arcmen_team/",
@@ -455,7 +461,7 @@
 	<!-- Start of bodyEnd -->
     
     <!-- End of bodyEnd -->
-                    <!-- Start of bodyEnd -->
+    <!-- Start of bodyEnd -->
     <!--
       Framer hydrates this page with React after load, and hydration resets a
       few things that matter for search: the title reverts to Framer's own page
@@ -515,6 +521,7 @@
         var ROBOTS = "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1";
         var VIDEO_LABEL = null;
         var MAILTO = "arcmen.team@gmail.com";
+        var WA_HREF = "https://wa.me/917993680585?text=Hi%20Arcmen%2C%20I%20found%20you%20through%20your%20website%20and%20I%27d%20like%20to%20discuss%20a%20project.";
         var SOCIALS = null;
         var COPY = {
           "h": "Event coverage with energy to spare",
@@ -732,6 +739,28 @@
           return null;
         }
 
+        // The "Book a session" call to action is wired to open a WhatsApp chat
+        // rather than walk the visitor to the contact page — a message with the
+        // project is one tap away. Found by its own text, not a class, so it
+        // keeps working across Framer re-exports; re-applied after hydration
+        // because React resets the href back to the design's own link.
+        function fixBookCta() {
+          if (!WA_HREF) return;
+          var links = document.getElementsByTagName("a");
+          for (var i = 0; i < links.length; i++) {
+            var a = links[i];
+            var t = (a.textContent || "").replace(/\s+/g, " ").trim();
+            if (!/\bbook\b/i.test(t)) continue;
+            if (a.getAttribute("href") !== WA_HREF) a.setAttribute("href", WA_HREF);
+            if (a.getAttribute("target") !== "_blank") {
+              a.setAttribute("target", "_blank");
+            }
+            if (a.getAttribute("rel") !== "noopener noreferrer") {
+              a.setAttribute("rel", "noopener noreferrer");
+            }
+          }
+        }
+
         function addSocials() {
           if (!SOCIALS || !SOCIALS.length) return;
           var row1 = rowNamed(1), row2 = rowNamed(2);
@@ -813,6 +842,7 @@
           fixHead();
           fixVideo();
           linkMail();
+          fixBookCta();
           addSocials();
           addCopy();
           var imgs = document.getElementsByTagName("img");
@@ -889,9 +919,5 @@
       })();
     </script>
     <!-- End of bodyEnd -->
-
-
-
-
   </body>
 </html>
