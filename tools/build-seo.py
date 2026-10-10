@@ -26,6 +26,7 @@ import sys
 import time
 from datetime import datetime, timezone
 from email.utils import format_datetime
+from urllib.parse import quote
 
 HOST = "https://www.arcmen.in"
 BRAND = "Arcmen"
@@ -39,6 +40,25 @@ LOGO = "https://framerusercontent.com/images/3lcJMoudbRGL6KxAK4m0lIcnpc.png"
 LOGO_KEY = "3lcJMoudbRGL6KxAK4m0lIcnpc.png"
 EMAIL = "arcmen.team@gmail.com"
 PHONE = "+91 79936 80585"
+# WhatsApp click-to-chat: the number above as bare digits (country code, no
+# "+" or spaces) and the message pre-typed for the visitor. wa.me opens the
+# WhatsApp app on mobile and WhatsApp Web on desktop. Edit either line and
+# re-run to change the button everywhere.
+WA_NUMBER = "917993680585"
+WA_MESSAGE = ("Hi Arcmen, I found you through your website and I'd like to "
+              "discuss a project.")
+WA_HREF = "https://wa.me/%s?text=%s" % (WA_NUMBER, quote(WA_MESSAGE))
+# Phosphor "whatsapp-logo" fill glyph at its native 256x256 viewBox — the same
+# icon set as the social pills, so the WhatsApp pill in the contact row is drawn
+# in the same cream as Instagram/X rather than brand green.
+WHATSAPP_ICON = (
+    "M152.58,145.23l23,11.48A24,24,0,0,1,152,176a72.08,72.08,0,0,1-72-72A24,24,"
+    "0,0,1,99.29,80.46l11.48,23L101,118a8,8,0,0,0-.73,7.51,56.47,56.47,0,0,0,"
+    "30.15,30.15A8,8,0,0,0,138,155ZM232,128A104,104,0,0,1,79.12,219.82L45.07,"
+    "231.17a16,16,0,0,1-20.24-20.24l11.35-34.05A104,104,0,1,1,232,128Zm-40,24a8,"
+    "8,0,0,0-4.42-7.16l-32-16a8,8,0,0,0-8,.5l-14.69,9.8a40.55,40.55,0,0,1-16-16l"
+    "9.8-14.69a8,8,0,0,0,.5-8l-16-32A8,8,0,0,0,104,64a40,40,0,0,0-40,40,88.1,"
+    "88.1,0,0,0,88,88A40,40,0,0,0,192,152Z")
 ROBOTS = ("index, follow, max-snippet:-1, max-image-preview:large, "
           "max-video-preview:-1")
 ORG_DESC = ("Arcmen is a digital media marketing and production agency. "
@@ -856,6 +876,18 @@ LOGO_ARIA_TEXT = "%s — go to the home page" % BRAND# The Framer template label
 JUNK_ALT_RE = re.compile(r"Mehedi|Free Framer Template", re.I)
 
 
+# Framer's contact page ships the phone link as href="tel: +91 79936 80585".
+# The space after the colon and the spaces inside the number make some dialers
+# drop the link, so normalise any tel: href down to "+" and digits only.
+TEL_RE = re.compile(r'href="tel:\s*([+\d][\d\s()\-]*)"')
+
+
+def fix_tel(doc):
+    def repl(m):
+        return 'href="tel:%s"' % re.sub(r"[^\d+]", "", m.group(1))
+    return TEL_RE.sub(repl, doc)
+
+
 def rewrite_body(doc, alt_map, eager, stats):
     cut = body_start(doc)
     head, body = doc[:cut], doc[cut:]
@@ -883,7 +915,7 @@ def rewrite_body(doc, alt_map, eager, stats):
             stats["lazy_added"] += 1
         return tag
 
-    return head + IMG_RE.sub(fix, body)
+    return fix_tel(head + IMG_RE.sub(fix, body))
 
 
 KEEPER = """    <!-- Start of bodyEnd -->
@@ -917,6 +949,7 @@ KEEPER = """    <!-- Start of bodyEnd -->
         var ROBOTS = __ROBOTS__;
         var VIDEO_LABEL = __VIDEO__;
         var MAILTO = __MAILTO__;
+        var WA_HREF = __WAHREF__;
         var SOCIALS = __SOCIALS__;
         var COPY = __COPY__;
         var SVG_NS = "http://www.w3.org/2000/svg";
@@ -1126,6 +1159,28 @@ KEEPER = """    <!-- Start of bodyEnd -->
           return null;
         }
 
+        // The "Book a session" call to action is wired to open a WhatsApp chat
+        // rather than walk the visitor to the contact page — a message with the
+        // project is one tap away. Found by its own text, not a class, so it
+        // keeps working across Framer re-exports; re-applied after hydration
+        // because React resets the href back to the design's own link.
+        function fixBookCta() {
+          if (!WA_HREF) return;
+          var links = document.getElementsByTagName("a");
+          for (var i = 0; i < links.length; i++) {
+            var a = links[i];
+            var t = (a.textContent || "").replace(/\\s+/g, " ").trim();
+            if (!/\\bbook\\b/i.test(t)) continue;
+            if (a.getAttribute("href") !== WA_HREF) a.setAttribute("href", WA_HREF);
+            if (a.getAttribute("target") !== "_blank") {
+              a.setAttribute("target", "_blank");
+            }
+            if (a.getAttribute("rel") !== "noopener noreferrer") {
+              a.setAttribute("rel", "noopener noreferrer");
+            }
+          }
+        }
+
         function addSocials() {
           if (!SOCIALS || !SOCIALS.length) return;
           var row1 = rowNamed(1), row2 = rowNamed(2);
@@ -1207,6 +1262,7 @@ KEEPER = """    <!-- Start of bodyEnd -->
           fixHead();
           fixVideo();
           linkMail();
+          fixBookCta();
           addSocials();
           addCopy();
           var imgs = document.getElementsByTagName("img");
@@ -1294,10 +1350,16 @@ def social_payload(socials):
     """
     if not socials:
         return None
-    return [{"name": name, "url": url, "icon": icon,
-             "label": "%s on %s" % (BRAND, name) if url
-                      else "%s on %s (link coming soon)" % (BRAND, name)}
-            for name, url, icon in socials]
+    pills = [{"name": name, "url": url, "icon": icon,
+              "label": "%s on %s" % (BRAND, name) if url
+                       else "%s on %s (link coming soon)" % (BRAND, name)}
+             for name, url, icon in socials]
+    # WhatsApp rides in the same row but is a chat link, not a profile, so it is
+    # appended here (where the row is built) and deliberately kept out of the
+    # sameAs array, which is sourced from live_socials() instead.
+    pills.append({"name": "WhatsApp", "url": WA_HREF, "icon": WHATSAPP_ICON,
+                  "label": "Chat with %s on WhatsApp" % BRAND})
+    return pills
 
 
 def keeper_for(alt_map, eager, title, robots=ROBOTS, video=None, socials=None,
@@ -1311,6 +1373,7 @@ def keeper_for(alt_map, eager, title, robots=ROBOTS, video=None, socials=None,
             .replace("__ROBOTS__", json.dumps(robots))
             .replace("__VIDEO__", json.dumps(video, ensure_ascii=False))
             .replace("__MAILTO__", json.dumps(EMAIL))
+            .replace("__WAHREF__", json.dumps(WA_HREF))
             .replace("__SOCIALS__", js(social_payload(socials)))
             .replace("__COPY__", js(copy)))
 
